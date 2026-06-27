@@ -1,30 +1,42 @@
 from fastapi import APIRouter
 
+from models.user import User
+
+from services.auth_service import AuthService
+
+
 router = APIRouter(
+
     prefix="/auth",
+
     tags=["Authentication"]
+
 )
+
+auth = AuthService()
 
 
 @router.post("/register")
-def register():
 
-    return {
-        "message": "User registered"
-    }
+def register(user: User):
+
+    return auth.register(user)
 
 
 @router.post("/login")
-def login():
 
-    return {
-        "message": "User logged in"
-    }
+def login(
 
+    username: str,
 
-@router.post("/logout")
-def logout():
+    password: str
 
-    return {
-        "message": "User logged out"
-    }
+):
+
+    return auth.login(
+
+        username,
+
+        password
+
+    )
